@@ -1,5 +1,4 @@
-{% set version = "0.1-1" %}
-
+{% set version = '0.1-1' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,29 +7,31 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: pack_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/pack_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/pack/pack_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/pack_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/pack/pack_{{ version }}.tar.gz
   sha256: 278fe6ebf8e0cab0bcedc93dc5b17d5642dec128361e7f8c173a91cb29439774
 
 build:
+  merge_build_host: True  # [win]
+  number: 1003
   noarch: generic
-  number: 1002
-
   rpaths:
     - lib/R/lib/
     - lib/
+
 requirements:
   build:
+    - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+  host:
     - r-base
-
   run:
     - r-base
 
 test:
   commands:
-    - $R -e "library('pack')"  # [not win]
+    - $R -e "library('pack')"           # [not win]
     - "\"%R%\" -e \"library('pack')\""  # [win]
 
 about:
@@ -38,13 +39,21 @@ about:
   license: GPL-3.0-only
   summary: Functions to easily convert data to binary formats other programs/machines can understand.
   license_family: GPL3
-
   license_file:
-    - {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+
 extra:
   recipe-maintainers:
     - conda-forge/r
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
+
+# Package: pack
+# Type: Package
+# Title: Convert values to/from raw vectors
+# Version: 0.1-1
+# Date: 2008-08-22
+# Author: Josh Ulrich
+# Maintainer: Josh Ulrich <josh.m.ulrich@gmail.com>
+# Description: Functions to easily convert data to binary formats other programs/machines can understand.
+# License: GPL-3
+# LazyLoad: yes
+# Packaged: Sun Sep  7 19:46:20 2008; josh

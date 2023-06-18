@@ -1,11 +1,11 @@
-About r-pack
-============
+About r-pack-feedstock
+======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-pack-feedstock/blob/main/LICENSE.txt)
 
 Home: https://CRAN.R-project.org/package=pack
 
 Package license: GPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-pack-feedstock/blob/main/LICENSE.txt)
 
 Summary: Functions to easily convert data to binary formats other programs/machines can understand.
 
